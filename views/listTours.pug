@@ -1,0 +1,52 @@
+extends base
+
+mixin navItem(link, text, icon, active)
+  li(class=`${active ? 'side-nav--active' : ''}`)
+    a(href=`${link}`)
+      svg
+        use(xlink:href=`img/icons.svg#icon-${icon}`)
+      | #{text}
+
+block content
+  main.main.admin
+    .user-view
+      nav.user-view__menu
+        .admin-nav
+          h5.admin-nav__heading Admin
+          ul.side-nav
+            +navItem('/create-tour', 'Create Tours', 'map')
+            +navItem('/list-tours', 'List Tours', 'map', true)
+        ul.side-nav
+          +navItem('/me', 'Settings', 'settings')
+      .user-view__content
+        .table
+          h2.heading-secondary.ma-bt-md All Tours
+
+          table#tours
+            tr
+              th
+              th Name
+              th Destination
+              th Duration
+              th Price (Ksh)
+              th Max. Group Size
+              th
+            each tour in tours
+              tr
+                td
+                  img.table-img(src=`${tour.imageCover}`, alt=`${tour.name}`)
+                td
+                  span= tour.name
+                td
+                  span= tour.destination
+                td
+                  span= tour.duration
+                td
+                  span= tour.price
+                td
+                  svg.card__icon
+                    use(xlink:href='/img/icons.svg#icon-user')
+                  span= `${tour.maxGroupSize} people`
+                td
+                  a.btn.btn--green.btn--small(href=`/manage-tour/${tour.slug}`) Manage
+

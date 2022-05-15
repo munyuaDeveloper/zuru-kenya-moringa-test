@@ -1,0 +1,65 @@
+extends base
+
+mixin navItem(link, text, icon, active)
+  li(class=`${active ? 'side-nav--active' : ''}`)
+    a(href=`${link}`)
+      svg
+        use(xlink:href=`img/icons.svg#icon-${icon}`)
+      | #{text}
+
+block content
+  main.main.admin
+    .user-view
+      nav.user-view__menu
+        .admin-nav
+          h5.admin-nav__heading Admin
+          ul.side-nav
+            +navItem('/create-tour', 'Create Tours', 'map', true)
+            +navItem('/list-tours', 'List Tours', 'map')
+        ul.side-nav
+          +navItem('/me', 'Settings', 'settings')
+
+      .user-view__content
+        .user-view__form-container
+          h2.heading-secondary.ma-bt-md Create New Tour
+          form.form.form-create-tour
+            .form__group
+              label.form__label(for='name') Name
+              input#name.form__input(type='text', placeholder='Tour name', required)
+            .form__group
+              label.form__label(for='destination') Tour Destination
+              input#destination.form__input(type='text', placeholder='Mt. Kenya', required)
+            .form__group
+              label.form__label(for='duration') Tour Duration
+              input#duration.form__input(type='number', placeholder='3', required)
+            .form__group
+              label.form__label(for='price') Tour charges
+              input#price.form__input(type='number', placeholder='3000', required)
+            .form__group
+              label.form__label(for='maxGroupSize') Maximum Group Size
+              input#maxGroupSize.form__input(type='number', placeholder='30', required)
+            .form__group
+              label.form__label(for='startDate') Start Date
+              input#startDate.form__input(type='date', placeholder='30/06/2022', required)
+            .form__group
+              label.form__label(for='difficulty') Difficulty
+              select#difficulty.form__input(required)
+                option(value='easy') #{'Easy'}
+                option(value='medium') #{'Medium'}
+                option(value='difficult') #{'Difficult'}
+            .form__group
+              label.form__label(for='guides') Guides
+              select#guides.form__input(multiple, required)
+                each user in users
+                  option(value=user._id) #{user.name}
+            .form__group
+              label.form__label(for='summary') Tour Summary
+              textarea#summary.form__input(placeholder='Tour summary ...', required)
+            .form__group.ma-bt-lg
+              label.form__label(for='description') Tour Description
+              textarea#description.form__input(placeholder='Tour description ...', required)
+            .form__group.ma-bt-lg
+              label.form__label(for='file') Tour Image
+              input#file.form__input(type='url', placeholder='https://image.com', required)
+            .form__group.right
+              button.btn.btn--small.btn--green Create Tour

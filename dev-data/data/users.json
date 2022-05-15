@@ -1,0 +1,20 @@
+[
+  {
+    "_id": "5c8a1d5b0190b214360dc037",
+    "name": "Peter Munyua",
+    "email": "admin@gmail.com",
+    "role": "admin",
+    "active": true,
+    "photo": "peter.png",
+    "password": "pass1234"
+  },
+  {
+    "_id": "5c8a1dfa2f8fb814b56fa181",
+    "name": "John Doe",
+    "email": "john@gmail.com",
+    "role": "admin",
+    "active": true,
+    "photo": "peter.png",
+    "password": "pass1234"
+  }
+]
