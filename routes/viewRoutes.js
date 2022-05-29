@@ -9,16 +9,18 @@ router.use(viewsController.alerts);
 router.get('/', authController.isLoggedIn, viewsController.getOverview);
 
 router.get('/tour/:slug', authController.isLoggedIn, viewsController.getTour);
+
 router.get(
   '/manage-tour/:slug',
   authController.isLoggedIn,
   viewsController.manageTour
 );
 router.get('/login', authController.isLoggedIn, viewsController.getLoginForm);
+
 router.get('/me', authController.protect, viewsController.getAccount);
 
-router.get('/my-tours', authController.protect, viewsController.getMyTours);
 router.get('/create-tour', authController.protect, viewsController.createTour);
+
 router.get(
   '/update-tour/:slug',
   authController.protect,

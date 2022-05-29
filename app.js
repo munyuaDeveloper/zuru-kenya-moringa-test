@@ -15,9 +15,6 @@ const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
-const reviewRouter = require('./routes/reviewRoutes');
-const bookingRouter = require('./routes/bookingRoutes');
-const bookingController = require('./controllers/bookingController');
 const viewRouter = require('./routes/viewRoutes');
 
 // Start express app
@@ -32,10 +29,6 @@ app.set('views', path.join(__dirname, 'views'));
 // Implement CORS
 app.use(cors());
 // Access-Control-Allow-Origin *
-// api.natours.com, front-end natours.com
-// app.use(cors({
-//   origin: 'https://www.natours.com'
-// }))
 
 app.options('*', cors());
 // app.options('/api/v1/tours/:id', cors());
@@ -59,12 +52,6 @@ const limiter = rateLimit({
 });
 app.use('/api', limiter);
 
-// Stripe webhook, BEFORE body-parser, because stripe needs the body as stream
-app.post(
-  '/webhook-checkout',
-  bodyParser.raw({ type: 'application/json' }),
-  bookingController.webhookCheckout
-);
 
 // Body parser, reading data from body into req.body
 app.use(express.json({ limit: '10kb' }));
@@ -104,8 +91,6 @@ app.use((req, res, next) => {
 app.use('/', viewRouter);
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
-app.use('/api/v1/reviews', reviewRouter);
-app.use('/api/v1/bookings', bookingRouter);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
